@@ -14,8 +14,24 @@ fork it. improve it. make it yours. PRs are welcome!
 
 ## install
 
+in cursor:
+
 ```bash
 /add-plugin pstack
+```
+
+in claude code:
+
+```bash
+/plugin marketplace add renefatuaki/cursor-plugins
+/plugin install pstack@cursor-plugins
+```
+
+in codex:
+
+```bash
+codex plugin marketplace add renefatuaki/cursor-plugins
+codex plugin add pstack@cursor-plugins
 ```
 
 ## get started

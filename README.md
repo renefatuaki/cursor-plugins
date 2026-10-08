@@ -100,15 +100,22 @@ Author values match each plugin’s `plugin.json` `author.name` (Cursor lists `p
 
 ## Repository structure
 
-This is a multi-plugin marketplace repository. The root `.cursor-plugin/marketplace.json` lists all plugins, and each plugin has its own manifest:
+This is a multi-plugin marketplace repository. The root `.cursor-plugin/marketplace.json` lists all plugins, and each plugin has its own manifest. Plugins that also target Claude Code or Codex carry an extra manifest and appear in the matching marketplace file:
 
 ```
 plugins/
 ├── .cursor-plugin/
 │   └── marketplace.json       # Marketplace manifest (lists all plugins)
+├── .claude-plugin/
+│   └── marketplace.json       # Claude Code marketplace
+├── .agents/plugins/
+│   └── marketplace.json       # Codex marketplace
 ├── plugin-name/
 │   ├── .cursor-plugin/
 │   │   └── plugin.json        # Per-plugin manifest
+│   ├── .claude-plugin/
+│   │   └── plugin.json        # Optional Claude Code manifest
+│   ├── plugin.json            # Optional Agent Plugins manifest (Codex)
 │   ├── skills/                # Agent skills (SKILL.md with frontmatter)
 │   ├── rules/                 # Cursor rules (.mdc files)
 │   ├── mcp.json               # MCP server definitions
