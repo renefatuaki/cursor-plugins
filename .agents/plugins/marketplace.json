@@ -14,6 +14,17 @@
         "installation": "AVAILABLE"
       },
       "category": "Developer Tools"
+    },
+    {
+      "name": "team-kit",
+      "source": {
+        "source": "local",
+        "path": "./team-kit"
+      },
+      "policy": {
+        "installation": "AVAILABLE"
+      },
+      "category": "Developer Tools"
     }
   ]
 }

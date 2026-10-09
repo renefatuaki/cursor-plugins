@@ -220,7 +220,7 @@ it("annotates Bugbot threads with distinct review-pass counts", () => {
                 comments: {
                   nodes: [
                     {
-                      body: "CURSOR_AUTOMATION_ID: run-2 severity high",
+                      body: "RUN_ID: run-2 severity high",
                       createdAt: "now",
                       path: null,
                       line: null,
@@ -254,6 +254,42 @@ it("annotates Bugbot threads with distinct review-pass counts", () => {
   expect(threads).toHaveLength(2);
   expect(threads.map((thread) => thread.isBugbot)).toEqual([true, true]);
   expect(threads.map((thread) => thread.bugbotReviewPasses)).toEqual([3, 3]);
+});
+
+it("counts keyless Bugbot threads as a single review pass", () => {
+  const thread = (id: string, body: string) => ({
+    id,
+    isResolved: false,
+    comments: {
+      nodes: [
+        {
+          body,
+          createdAt: "now",
+          path: null,
+          line: null,
+          author: { login: "cursor" },
+        },
+      ],
+    },
+  });
+  const response = {
+    data: {
+      repository: {
+        pullRequest: {
+          reviewThreads: {
+            nodes: [
+              thread("one", "severity high"),
+              thread("two", "Bugbot found an issue"),
+              thread("three", "plain human-style comment"),
+            ],
+          },
+        },
+      },
+    },
+  };
+  const threads = parseReviewThreads(response);
+  expect(threads.map((t) => t.isBugbot)).toEqual([true, true, false]);
+  expect(threads.map((t) => t.bugbotReviewPasses)).toEqual([1, 1, 1]);
 });
 
 describe("context and stack discovery", () => {

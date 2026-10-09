@@ -1,6 +1,6 @@
 # Cursor plugins
 
-Official Cursor plugins for popular developer tools, frameworks, and SaaS products. Each plugin is a standalone directory at the repository root with its own `.cursor-plugin/plugin.json` manifest.
+A fork of Cursor's plugin repository that publishes `pstack` and `team-kit` for Claude Code. Cursor is not supported. The other plugin directories are inherited from upstream and are not published through any marketplace here.
 
 ## Plugins
 
@@ -8,7 +8,6 @@ Official Cursor plugins for popular developer tools, frameworks, and SaaS produc
 |:-------|:-------|:-------|:---------|:-------------------------------------|
 | `teaching` | [Teaching](teaching/) | Cursor | Utilities | Skill mapping, practice plans, and learning retrospectives. |
 | `continual-learning` | [Continual Learning](continual-learning/) | Eric Zakariasson | Developer Tools | Incremental transcript-driven memory updates for AGENTS.md using high-signal bullet points only. |
-| `cursor-team-kit` | [Cursor Team Kit](cursor-team-kit/) | Eric Zakariasson | Developer Tools | Internal team workflows for CI, code review, shipping, local automation, and verification. |
 | `thermos` | [Thermos](thermos/) | Cursor | Developer Tools | Thermo-nuclear branch review: deep security/correctness audits, harsh code-quality rubrics, parallel subagents, thermos orchestration, and optional merge-ready PR flows. |
 | `create-plugin` | [Create Plugin](create-plugin/) | Cursor | Developer Tools | Scaffold and validate new agent plugins. |
 | `ralph-loop` | [Ralph Loop](ralph-loop/) | Cursor | Developer Tools | Iterative self-referential AI loops using the Ralph Wiggum technique. |
@@ -19,7 +18,8 @@ Official Cursor plugins for popular developer tools, frameworks, and SaaS produc
 | `cursor-sdk` | [Cursor SDK](cursor-sdk/) | Cursor | Developer Tools | Build apps, scripts, and automations with the TypeScript SDK. |
 | `origin-apps` | [Origin Apps](origin-apps/) | Cursor | Developer Tools | Skills for building on the Cursor Origin API. Fetch the live spec first, then follow the Origin rules for credentials, scopes, webhooks, paging, and errors. Includes a skill that plans the port of an existing GitHub App. |
 | `orchestrate` | [Orchestrate](orchestrate/) | Cursor | Developer Tools | Fan large tasks out across parallel cloud agents with planners, workers, verifiers, and structured handoffs. |
-| `pstack` | [pstack](pstack/) | Lauren Tan | Developer Tools | if you want to go fast, go deep first. pstack helps you write less, but higher quality code. rigorous agent workflows you can parallelize with confidence. |
+| `pstack` | [pstack](pstack/) | Lauren Tan | Developer Tools | Claude Code only. if you want to go fast, go deep first. pstack helps you write less, but higher quality code. rigorous agent workflows you can parallelize with confidence. |
+| `team-kit` | [team-kit](team-kit/) | Eric Zakariasson | Developer Tools | Claude Code only. Engineering team workflows for CI, code review, shipping, control-cli, control-ui, verify-this, test reliability, code cleanup, and work summaries. Formerly `cursor-team-kit`. |
 | `dyl-stack` | [dyl-stack](dyl-stack/) | Dylan Gattey | Developer Tools | Dylan's agent style on top of pstack: root causes over symptom patches, The Algorithm before design, terse verified delivery, a PR review that fits in a paste, and Figma-to-UI with a visual judge. |
 | `advisor` | [Advisor](advisor/) | Cursor | Developer Tools | Consult a stronger model before major decisions, when stuck, and before declaring done. |
 | `grok-voice` | [Grok Voice](grok-voice/) | Eric Zakariasson | Developer Tools | Add Grok voice to an app: realtime speech-to-speech, speech-to-text dictation, text-to-speech read-aloud, and a log-driven fix loop for voice sessions. |
@@ -100,24 +100,33 @@ Author values match each plugin’s `plugin.json` `author.name` (Cursor lists `p
 
 ## Repository structure
 
-This is a multi-plugin marketplace repository. The root `.cursor-plugin/marketplace.json` lists all plugins, and each plugin has its own manifest. Plugins that also target Claude Code or Codex carry an extra manifest and appear in the matching marketplace file:
+This fork publishes only `pstack` and `team-kit`, for Claude Code (and Codex). Cursor is not supported: the repository has no Cursor marketplace. The other plugin directories come from the upstream Cursor repository and are not listed in any marketplace here. `scripts/validate-plugins.mjs` checks the Claude Code and Codex marketplace files.
+
+Install them in the latest Claude Code with:
+
+```text
+/plugin marketplace add openai/codex-plugin-cc
+/plugin marketplace add renefatuaki/cursor-plugins
+/plugin install pstack@cursor-plugins
+/codex:setup
+```
+
+Installing `pstack` also installs `team-kit`, Anthropic's `skill-creator`, and OpenAI's `codex` plugin. The Codex marketplace comes first so that dependency resolves.
+
+Repository layout:
 
 ```
 plugins/
-├── .cursor-plugin/
-│   └── marketplace.json       # Marketplace manifest (lists all plugins)
 ├── .claude-plugin/
 │   └── marketplace.json       # Claude Code marketplace
 ├── .agents/plugins/
 │   └── marketplace.json       # Codex marketplace
 ├── plugin-name/
-│   ├── .cursor-plugin/
-│   │   └── plugin.json        # Per-plugin manifest
 │   ├── .claude-plugin/
-│   │   └── plugin.json        # Optional Claude Code manifest
+│   │   └── plugin.json        # Claude Code manifest
 │   ├── plugin.json            # Optional Agent Plugins manifest (Codex)
 │   ├── skills/                # Agent skills (SKILL.md with frontmatter)
-│   ├── rules/                 # Cursor rules (.mdc files)
+│   ├── hooks/hooks.json       # Optional Claude Code hooks
 │   ├── mcp.json               # MCP server definitions
 │   ├── README.md
 │   ├── CHANGELOG.md
