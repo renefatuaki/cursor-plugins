@@ -2,8 +2,8 @@
 
 **You own the skill's voice.**
 
-1. Use the **create-skill** skill (Cursor's built-in for authoring SKILL.md files).
-2. Validate the skill: frontmatter has `name` and `description`, referenced files exist, cross-skill links resolve.
+1. Use Anthropic's `skill-creator` skill (`skill-creator:skill-creator`, installed with pstack) to draft and iterate on the SKILL.md.
+2. Validate the skill: frontmatter has `name` (lowercase, hyphens, matching the directory) and `description`, referenced files exist, cross-skill links resolve. For a skill inside a plugin, run `claude plugin validate <plugin-dir>`.
 3. Test cases if structural. Skip if subjective.
 4. Run **Opening a PR**.
 

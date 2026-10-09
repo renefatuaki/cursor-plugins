@@ -1,0 +1,30 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "team-kit",
+  "version": "2.0.0",
+  "description": "Engineering team workflows for CI, code review, shipping, control-cli, control-ui, verify-this, test reliability, code cleanup, and work summaries. Designed to work without requiring third-party service integrations.",
+  "author": {
+    "name": "Eric Zakariasson"
+  },
+  "homepage": "https://github.com/renefatuaki/cursor-plugins/tree/main/team-kit",
+  "repository": "https://github.com/renefatuaki/cursor-plugins",
+  "license": "MIT",
+  "keywords": [
+    "team-kit",
+    "ci",
+    "code-review",
+    "shipping",
+    "testing",
+    "verification",
+    "local-automation"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "team-kit",
+        "category": "Developer Tools",
+        "logo": "./assets/avatar.png"
+      }
+    }
+  }
+}

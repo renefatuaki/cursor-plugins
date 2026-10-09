@@ -82,11 +82,11 @@ continue
 keep going until done
 ```
 
-Short works because the playbook holds the structure, and a Custom Mode keeps `/poteto-mode` in context on every turn. [Set up pstack](./01-setup.md#run-your-first-task) shows how to start one. Your words carry the intent, and the skill carries the rigor.
+Short works because the playbook holds the structure, and `/poteto-mode` stays on for the whole session once invoked. [Set up pstack](./01-setup.md#run-your-first-task) shows the first run. Your words carry the intent, and the skill carries the rigor.
 
 ## Switch tasks with "new task"
 
-A long chat accumulates context from the last task. When you change subjects, say so:
+A long session accumulates context from the last task. When you change subjects, say so:
 
 ```text
 /poteto-mode new task. figure out why the cache entry survives logout. don't change any code yet.
@@ -94,11 +94,11 @@ A long chat accumulates context from the last task. When you change subjects, sa
 
 "new task" tells `/poteto-mode` to re-match rather than continue the prior playbook. "don't change any code yet" pins this one to Investigation. Without those two phrases, a mode mid-Feature tends to treat your question as the next feature step.
 
-## Give parallel work its own machine
+## Give parallel work its own worktree
 
-If you run several agents against one repository on one computer, they will fight over the working tree, the ports, and the build output. The cleanest isolation is a [cloud subagent](https://cursor.com/docs/subagents#cloud-subagents). Each one gets its own VM and branch, so it can install dependencies, run your app, and record video of the result without touching your machine. Type `/in-cloud` before the task, or ask the parent chat to hand work to cloud subagents.
+If you run several agents against one repository, they will fight over the working tree, the ports, and the build output. pstack gives each parallel writer a background [subagent](https://code.claude.com/docs/en/sub-agents) with `isolation: "worktree"`, so each one gets its own checkout and branch. They still share your machine's CPU, ports, and rate limits, so give each one its own ports, tmp directory, and app data, and cap how many run at once. A new worktree starts from the default branch, so the brief names the branch or SHA to check out first.
 
-When the work has to stay local, ask for a worktree up front:
+To pin the base yourself, ask for a worktree up front:
 
 ```text
 /poteto-mode new task. branch off <base> in a fresh worktree, then port the parser change there.
@@ -112,7 +112,7 @@ Worktrees accumulate. When disk gets tight, ask:
 /poteto-mode what's eating my disk? prune the worktrees that are safe to prune.
 ```
 
-The [Worktree cleanup playbook](../../skills/poteto-mode/playbooks/worktree-cleanup.md) classifies every worktree by merge state, uncommitted work, and which chats still touch it. It deletes only what that evidence clears and pauses for your call on anything holding uncommitted work.
+The [Worktree cleanup playbook](../../skills/poteto-mode/playbooks/worktree-cleanup.md) classifies every worktree by merge state, uncommitted work, and which sessions still touch it. It deletes only what that evidence clears and pauses for your call on anything holding uncommitted work.
 
 ## Leave it running
 
